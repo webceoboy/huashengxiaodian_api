@@ -8,7 +8,6 @@ use app\models\OrderSearch;
 use app\services\ApiService;
 use Yii;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -135,7 +134,7 @@ class OrderController extends Controller
             return ApiService::img($item->image_url);
         }, 8640000);
         Yii::$app->response->content = $binary;
-        Yii::$app->response->format=Response::FORMAT_RAW;
+        Yii::$app->response->format = Response::FORMAT_RAW;
         Yii::$app->response->send();
     }
 }

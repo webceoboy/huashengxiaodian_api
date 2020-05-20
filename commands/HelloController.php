@@ -39,7 +39,6 @@ class HelloController extends Controller
     public function actionTest()
     {
         var_dump(ApiService::updateOrderList());
-        var_dump(WeChatService::sendOrderNotify(Order::findOne(['id' => 1])));
         var_dump(AppService::sendOrderNotify(Order::findOne(['id' => 1])));
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use yii\mutex\MysqlMutex;
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
@@ -44,6 +46,9 @@ $config = [
                     'levels' => ['error', 'warning'],
                 ],
             ],
+        ],
+        'mutex' => [
+            'class' => MysqlMutex::class,
         ],
         'db' => $db,
         /*

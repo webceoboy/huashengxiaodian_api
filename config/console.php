@@ -1,5 +1,7 @@
 <?php
 
+use yii\mutex\MysqlMutex;
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
@@ -10,7 +12,7 @@ $config = [
     'controllerNamespace' => 'app\commands',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
         '@tests' => '@app/tests',
     ],
     'components' => [
@@ -26,6 +28,9 @@ $config = [
             ],
         ],
         'db' => $db,
+        'mutex' => [
+            'class' => MysqlMutex::class,
+        ]
     ],
     'params' => $params,
     /*

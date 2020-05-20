@@ -4,6 +4,7 @@ namespace app\models;
 
 use app\enums\OrderStatusEnum;
 use app\enums\OrderTypeEnum;
+use app\services\AppService;
 
 /**
  * This is the model class for table "order".
@@ -134,5 +135,13 @@ class Order extends \yii\db\ActiveRecord
     public function getTypeLabel()
     {
         return OrderTypeEnum::getLabel($this->type);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        if ($insert) {
+            AppService::sendOrderNotify($this);
+        }
     }
 }
