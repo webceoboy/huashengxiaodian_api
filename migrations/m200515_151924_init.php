@@ -51,7 +51,7 @@ class m200515_151924_init extends Migration
             'order_id' => $this->integer()->notNull(),
             'title' => $this->string(64)->null()->comment('商品'),
             'post_id' => $this->string(16)->notNull()->comment('商品id'),
-            'image_url' => $this->string(128)->null()->comment('商品图片'),
+            'image_url' => $this->string(256)->null()->comment('商品图片'),
             'product_no' => $this->string(64)->null()->comment('商品编码'),
             'sku_id' => $this->string(64)->null()->comment('sku_id'),
             'sku_property_names' => $this->string(128)->null()->comment('属性'),

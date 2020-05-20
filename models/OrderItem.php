@@ -45,7 +45,7 @@ class OrderItem extends \yii\db\ActiveRecord
             [['quantity', 'created_at', 'updated_at'], 'integer'],
             [['original_price', 'price', 'cost', 'total_fee', 'discount_fee', 'amount'], 'number'],
             [['title', 'product_no', 'sku_id'], 'string', 'max' => 64, 'strict' => false],
-            ['image_url', 'string', 'max' => 128],
+            ['image_url', 'string', 'max' => 256],
             [['post_id'], 'string', 'max' => 16, 'strict' => false],
             [['sku_property_names'], 'string', 'max' => 128],
         ];

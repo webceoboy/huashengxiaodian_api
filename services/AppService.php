@@ -26,9 +26,19 @@ class AppService
     public static function sendBark($title, $content)
     {
         $client = ApiService::getClient();
+        if (!$_ENV['BARK_URL']) return false;
         foreach (explode(',', $_ENV['BARK_URL']) as $uid) {
             $client->get(sprintf('%s/%s/%s', $uid, $title, $content))->getBody()->getContents();
         }
 
+    }
+
+    public static function fecthAllOrders()
+    {
+        $_ENV['BARK_URL'] = false;
+        for ($i = time(); $i > strtotime('-1 year'); $i -= 86400 * 7) {
+            var_dump(date('Y-m-d', $i));
+            ApiService::updateOrderList(['start_time' => $i, 'end_time' => $i - 86400 * 7]);
+        }
     }
 }

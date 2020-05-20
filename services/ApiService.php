@@ -83,11 +83,12 @@ class ApiService
         $client = self::getClient();
         $result = json_decode($client->get($url)->getBody()->getContents(), true);
         if (is_array($result)) {
-            if (isset($result['errcode']) && $result['errcode'] == 0) {
+            if (isset($result['errcode']) && is_numeric($result['errcode']) && $result['errcode'] == 0) {
                 return $result;
             } else {
+
                 \Yii::error($result);
-                throw new \Exception('接口请求失败');
+                throw new \Exception('接口请求失败：' . $result['errmsg']);
             }
         }
         return [];
@@ -128,7 +129,7 @@ class ApiService
 
     public static function updateOrderList($query = [])
     {
-        $result = self::getOrderList();
+        $result = self::getOrderList($query);
         foreach ($result['orders'] as $order) {
             self::saveOrder($order);
         }
@@ -144,4 +145,6 @@ class ApiService
         ])->getBody()->getContents();
 
     }
+
+
 }
