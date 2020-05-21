@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'refund_reason',
                 //'refund_time:datetime',
                 //'raw:ntext',
-
+                ['class' => 'yii\grid\ActionColumn', 'template' => '{view} {delete}'],
 
             ],
         ]); ?>

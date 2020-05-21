@@ -56,8 +56,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
                         ['attribute' => 'receiver_state', 'value' => function (Order $order) {
-                            return implode(' ', [$order->receiver_state, $order->receiver_city, $order->receiver_district, $order->receiver_address, $order->receiver_name, $order->receiver_phone]);
-                        }, 'label' => '地址'],
+                            return implode('<br/>', [$order->receiver_name, $order->receiver_phone, $order->receiver_state . ' ' . $order->receiver_city . ' ' . $order->receiver_district . ' ' . $order->receiver_address]);
+                        }, 'label' => '地址','format'=>'raw'],
 
                         'buyer_nickname',
                         'openid',
