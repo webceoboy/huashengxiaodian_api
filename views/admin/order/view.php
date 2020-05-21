@@ -30,9 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     ['attribute' => 'status', 'value' => function (Order $model) {
                         return $model->getStatusLabel();
                     }],
-                    ['attribute' => 'type', 'value' => function (Order $model) {
+                    /*['attribute' => 'type', 'value' => function (Order $model) {
                         return $model->getTypeLabel();
-                    }],
+                    }],*/
                     'total_fee',
                     'discount_fee',
                     'postage',
@@ -43,8 +43,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'seller_message',
                     'time:datetime',
                     'paytime:datetime',
-                    'wx_transaction_id',
-                    'trade_no',
+                    //'wx_transaction_id',
+                    //'trade_no',
                     'vendor',
 
                 ],
@@ -56,9 +56,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     'receiver_name',
                     'receiver_phone',
-                    'receiver_state',
-                    'receiver_city',
-                    'receiver_district',
+                    ['attribute' => 'receiver_state', 'value' => function (Order $order) {
+                        return implode(' ', [$order->receiver_state, $order->receiver_city, $order->receiver_district]);
+                    }],
                     'receiver_address',
                     'buyer_nickname',
                     'openid',
@@ -75,22 +75,22 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= GridView::widget([
             'caption' => '订单内容',
             'layout' => '{items}',
-            'filterModel' => new OrderItem(),
+           // 'filterModel' => new OrderItem(),
             'dataProvider' => new ArrayDataProvider(['allModels' => $model->items]),
             'columns' => [
                 ['attribute' => 'image_url', 'format' => 'raw', 'value' => function (OrderItem $model) {
                     return Html::img($model->getProductImgUrl(), ['style' => 'width:5rem']);
                 }],
                 'title',
-                'product_no',
-                'sku_id',
+                //'product_no',
+                //'sku_id',
                 'sku_property_names',
                 'quantity',
-                'original_price',
-                'price',
-                'cost',
-                'total_fee',
-                'discount_fee',
+                //'original_price',
+                //'price',
+                // 'cost',
+                //'total_fee',
+                //'discount_fee',
                 'amount'
             ]
         ]) ?>

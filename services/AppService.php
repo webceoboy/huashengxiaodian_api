@@ -37,8 +37,7 @@ class AppService
     {
         $_ENV['BARK_URL'] = false;
         for ($i = time(); $i > strtotime('-1 year'); $i -= 86400 * 7) {
-            var_dump(date('Y-m-d', $i));
-            ApiService::updateOrderList(['start_time' => $i, 'end_time' => $i - 86400 * 7]);
+            ApiService::updateOrderList(['start_time' => $i - 86400 * 7, 'end_time' => $i]);
         }
     }
 }

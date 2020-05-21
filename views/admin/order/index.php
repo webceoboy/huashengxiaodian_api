@@ -1,5 +1,7 @@
 <?php
 
+use app\enums\OrderStatusEnum;
+use app\models\Order;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
@@ -25,11 +27,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 
-
-                'order_no',
-                'status',
-                'type',
+                'buyer_nickname',
+                //'order_no',
                 'total_fee',
+                'paytime:datetime',
+                ['attribute' => 'status', 'value' => function (Order $model) {
+                    return $model->getStatusLabel();
+                }, 'filter' => OrderStatusEnum::listData()],
+                //'type',
+
                 //'discount_fee',
                 //'postage',
                 //'fixed_fee',
@@ -37,20 +43,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'coin_fee',
                 //'amount',
                 'seller_message',
-                'time:datetime',
-                'paytime:datetime',
+                'buyer_message',
+                //'time:datetime',
+
                 //'wx_transaction_id',
-                'trade_no',
+                //'trade_no',
                 //'vendor',
                 'receiver_name',
                 'receiver_phone',
-                'receiver_state',
-                'receiver_city',
-                'receiver_district',
+                ['attribute' => 'receiver_state', 'value' => function (Order $order) {
+                    return implode(' ', [$order->receiver_state, $order->receiver_city, $order->receiver_district]);
+                }],
+
                 'receiver_address',
-                'buyer_nickname',
+
                 //'openid',
-                'buyer_message',
+                //'buyer_message',
                 //'refund_state',
                 //'refund_type',
                 //'refund_fee',
@@ -58,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'refund_time:datetime',
                 //'raw:ntext',
 
-                ['class' => 'yii\grid\ActionColumn'],
+                ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
             ],
         ]); ?>
 
