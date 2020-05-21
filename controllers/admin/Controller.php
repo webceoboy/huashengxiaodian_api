@@ -13,6 +13,8 @@ class Controller extends \yii\web\Controller
 
     public function behaviors()
     {
+
+        return [];
         return [
             'basic' => [
                 'class' => HttpBasicAuth::class,
