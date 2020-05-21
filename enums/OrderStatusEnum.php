@@ -17,6 +17,7 @@ class OrderStatusEnum extends BaseEnum
     const REFUNDED = 6;
     const CLIENT_CLOSE = 7;
     const TIME_OUT_CLOSE = 8;
+    const SELLER_CLOSE = 9;
     const WAIT_GROUP = 10;
 
     public static $list = [
@@ -28,6 +29,7 @@ class OrderStatusEnum extends BaseEnum
         self::REFUNDED => '退款成功',
         self::CLIENT_CLOSE => '主动关闭',
         self::TIME_OUT_CLOSE => '自动关闭',
+        self::SELLER_CLOSE => '商家关闭',
         self::WAIT_GROUP => '待成团',
     ];
 }
