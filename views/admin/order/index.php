@@ -3,6 +3,7 @@
 use app\enums\OrderStatusEnum;
 use app\models\Order;
 use yii\grid\GridView;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\OrderSearch */
@@ -26,8 +27,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'layout' => "{items}\n{summary}\n{pager}",
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
-                ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
-                'buyer_nickname',
+
+                ['attribute' => 'buyer_nickname', 'format' => 'raw', 'value' => function (Order $model) {
+                    return Html::a($model->buyer_nickname, ['view', 'id' => $model->id]);
+                }],
                 //'order_no',
                 'total_fee',
                 'paytime:datetime',
