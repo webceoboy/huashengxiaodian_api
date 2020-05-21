@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'layout' => "{items}\n{summary}\n{pager}",
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
-
+                ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
                 'buyer_nickname',
                 //'order_no',
                 'total_fee',
@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'refund_time:datetime',
                 //'raw:ntext',
 
-                ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
+
             ],
         ]); ?>
 

@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use yii\helpers\ArrayHelper;
+
 class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
 {
     public $id;
@@ -14,7 +16,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
         '100' => [
             'id' => '100',
             'username' => 'admin',
-            'password' => 'admin',
+            'password' => 'admin0000000000',
             'authKey' => 'test100key',
             'accessToken' => '100-token',
         ],
@@ -27,12 +29,23 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
         ],
     ];
 
+    public static function addAdmin()
+    {
+        self::$users['888'] = [
+            'id' => '888',
+            'username' => ArrayHelper::getValue($_ENV, 'ADMIN_USER', 'admin'),
+            'password' => ArrayHelper::getValue($_ENV, 'ADMIN_PASS', 'admin888'),
+            'authKey' => 'test888key',
+            'accessToken' => '888-token',
+        ];
+    }
 
     /**
      * {@inheritdoc}
      */
     public static function findIdentity($id)
     {
+        self::addAdmin();
         return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
     }
 
@@ -58,6 +71,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
      */
     public static function findByUsername($username)
     {
+        self::addAdmin();
         foreach (self::$users as $user) {
             if (strcasecmp($user['username'], $username) === 0) {
                 return new static($user);

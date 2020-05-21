@@ -71,6 +71,9 @@ class m200515_151924_init extends Migration
             'created_at' => $this->integer(10),
             'updated_at' => $this->integer(10),
         ]);
+        $this->createTable('user', [
+            'username' => $this->string(32)->notNull(),
+        ]);
     }
 
     /**

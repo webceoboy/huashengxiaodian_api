@@ -4,9 +4,7 @@
 namespace app\controllers\admin;
 
 
-use app\models\User;
-use yii\filters\auth\HttpBasicAuth;
-use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
 
 class Controller extends \yii\web\Controller
 {
@@ -14,17 +12,19 @@ class Controller extends \yii\web\Controller
     public function behaviors()
     {
 
-        return [];
+
         return [
-            'basic' => [
-                'class' => HttpBasicAuth::class,
-                'auth' => function ($username, $password) {
-                    if ($username == ArrayHelper::getValue($_ENV, 'ADMIN_USER', 'admin') && $password == ArrayHelper::getValue($_ENV, 'ADMIN_PASS', 'admin888')) {
-                        return User::findIdentity(100);
-                    }
-                    return null;
-                }
-            ]
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'create', 'update', 'view'],
+                        'roles' => ['@'],
+                    ],
+
+                ],
+            ],
         ];
     }
 }
