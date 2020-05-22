@@ -152,7 +152,7 @@ class ApiService
     public static function updateOrder($id)
     {
         $result = self::request('get', 'mag.admin.order.get.json', ['id' => $id]);
-        self::saveOrder($result);
+        self::saveOrder($result['order']);
         return $result;
     }
 
