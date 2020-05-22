@@ -144,4 +144,9 @@ class Order extends \yii\db\ActiveRecord
             AppService::sendOrderNotify($this);
         }
     }
+
+    public function getRawArray()
+    {
+        return unserialize($this->raw);
+    }
 }

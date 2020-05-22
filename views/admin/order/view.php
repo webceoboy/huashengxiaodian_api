@@ -9,6 +9,7 @@ use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Modal;
 use yii\data\ArrayDataProvider;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -73,11 +74,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         'receiver_phone',
                         ['attribute' => 'receiver_state', 'value' => function (Order $order) {
                             $address = implode(' ', [$order->receiver_city, $order->receiver_district, $order->receiver_address]);
-                            $text = implode(' ', [$order->receiver_name, $address, $order->receiver_phone]);
+                            $text = implode(' ', ['姓名：' . $order->receiver_name, '地址：' . $address, '电话：' . $order->receiver_phone]);
                             return $address . '&nbsp;&nbsp;' . Html::button('复制', ['class' => 'btn btn-success btn-xs', 'data-clipboard-text' => $text]);
                         }, 'label' => '地址', 'format' => 'raw'],
                         'buyer_nickname',
-                        'openid',
+                        ['label' => '物流', 'format' => 'raw', 'value' => function (Order $model) {
+                            $logistics = ArrayHelper::getValue($model->getRawArray(), 'logistics', []);
+                            $item = isset($logistics[0]) ? $logistics[0] : [];
+                            if ($item) return sprintf('%s（<span class="btn" "data-clipboard-text"="%s" style="    text-decoration: underline;    cursor: pointer;">%s</span>）', $item['company'], $item['no']);
+                            return '-';
+                        }],
                         'vendor',
                         ['attribute' => 'buyer_message', 'format' => 'raw', 'value' => function (Order $model) {
                             return Html::tag('span', $model->buyer_message, ['class' => 'label label-warning']);

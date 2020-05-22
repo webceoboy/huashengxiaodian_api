@@ -110,10 +110,11 @@ class ApiService
         }
         $new = $model->getIsNewRecord();
         $model->setAttributes($order);
+
         foreach (['receiver', 'buyer', 'refund'] as $sub) {
             $model->setAttributes(ArrayHelper::getValue($order, $sub, []));
         }
-
+        $model->raw = serialize($order);
         if ($model->save()) {
             if ($new) {
                 foreach (ArrayHelper::getValue($order, 'items', []) as $arr) {
