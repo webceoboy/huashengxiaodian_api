@@ -30,8 +30,8 @@
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget' => 'tree'],
                 'items' => [
-                    ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
-                    ['label' => '订单', 'icon' => 'dashboard', 'url' => ['admin/order/index']],
+                    ['label' => '功能菜单', 'options' => ['class' => 'header']],
+                    ['label' => '订单管理', 'icon' => 'dashboard', 'url' => ['admin/order/index']],
                 ],
             ]
         ) ?>
