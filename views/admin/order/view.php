@@ -1,5 +1,6 @@
 <?php
 
+use app\enums\LogisticCompanyEnum;
 use app\models\Order;
 use app\models\OrderConsignForm;
 use app\models\OrderItem;
@@ -136,7 +137,7 @@ $form = ActiveForm::begin([
     'action' => ['admin/order/consign'],
 ]); ?>
 <?= Html::activeHiddenInput($orderConsignForm, 'id', ['value' => $model->id]) ?>
-<?= $form->field($orderConsignForm, 'logistic_company')->textInput(); ?>
+<?= $form->field($orderConsignForm, 'logistic_company')->dropDownList(LogisticCompanyEnum::listData(), ['prompt' => '请选择物流公司']); ?>
 <?= $form->field($orderConsignForm, 'logistic_no')->textInput(); ?>
 <?= Html::submitButton('保存', ['class' => 'btn  btn-primary']) ?>
 <?php ActiveForm::end(); ?>
