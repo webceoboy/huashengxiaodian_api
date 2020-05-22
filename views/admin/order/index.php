@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::a($model->buyer_nickname, ['view', 'id' => $model->id]);
                 }],
                 //'order_no',
-                'total_fee',
+                'amount',
                 'paytime:datetime',
                 ['attribute' => 'status', 'value' => function (Order $model) {
                     return $model->getStatusLabel();
