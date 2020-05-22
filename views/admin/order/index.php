@@ -33,10 +33,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 }],
                 //'order_no',
                 'amount',
-                'paytime:datetime',
+
                 ['attribute' => 'status', 'value' => function (Order $model) {
                     return $model->getStatusLabel();
                 }, 'filter' => OrderStatusEnum::listData()],
+                'paytime:datetime',
                 //'type',
 
                 //'discount_fee',
