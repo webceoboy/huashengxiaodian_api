@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         }],
                         'receiver_phone',
                         ['attribute' => 'receiver_state', 'value' => function (Order $order) {
-                            $address = implode(' ', [$order->receiver_city, $order->receiver_district, $order->receiver_address]);
+                            $address = implode(' ', [$order->receiver_state, $order->receiver_city, $order->receiver_district, $order->receiver_address]);
                             $text = implode(' ', ['姓名：' . $order->receiver_name, '地址：' . $address, '电话：' . $order->receiver_phone]);
                             return $address . '&nbsp;&nbsp;' . Html::button('复制', ['class' => 'btn btn-success btn-xs', 'data-clipboard-text' => $text]);
                         }, 'label' => '地址', 'format' => 'raw'],
