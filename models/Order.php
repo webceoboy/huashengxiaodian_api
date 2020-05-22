@@ -59,7 +59,7 @@ class Order extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_no', 'status', 'type', 'time', 'trade_no'], 'required'],
+            [['id', 'order_no', 'status', 'type', 'time', 'trade_no'], 'required'],
             [['status', 'type', 'time', 'paytime', 'refund_state', 'refund_type', 'refund_time'], 'integer'],
             [['total_fee', 'discount_fee', 'postage', 'fixed_fee', 'coin_fee', 'amount', 'refund_fee'], 'number'],
             [['raw'], 'string'],

@@ -19,7 +19,7 @@ class Controller extends \yii\web\Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'create', 'update', 'view', 'delete'],
+                        'actions' => ['index', 'create', 'update', 'view', 'delete', 'img', 'price', 'consign'],
                         'roles' => ['@'],
                     ],
 

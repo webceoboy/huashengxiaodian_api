@@ -1,7 +1,11 @@
 <?php
 
 use app\models\Order;
+use app\models\OrderConsignForm;
 use app\models\OrderItem;
+use app\models\UpdatePriceForm;
+use yii\bootstrap\ActiveForm;
+use yii\bootstrap\Modal;
 use yii\data\ArrayDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
@@ -15,7 +19,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Orders', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="box border-primary order-view">
+<div class="box box-primary order-view">
 
     <div class="box-body">
         <div class="row">
@@ -36,7 +40,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'total_fee',
                         'discount_fee',
                         'postage',
-                        'fixed_fee',
+                        ['attribute' => 'fixed_fee', 'format' => 'raw', 'value' => function (Order $model) {
+                            $html = $model->fixed_fee;
+                            return $html . '&nbsp;&nbsp;' . Html::button('修改', ['class' => 'btn btn-xs btn-success', 'data-toggle' => "modal", 'data-target' => "#w3"]);
+                        }],
                         'fixed_reason',
                         'coin_fee',
                         'amount',
@@ -45,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'paytime:datetime',
                         //'wx_transaction_id',
                         //'trade_no',
-                        'vendor',
+
 
                     ],
                 ]) ?>
@@ -54,19 +61,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     'model' => $model,
                     'attributes' => [
 
-
+                        ['attribute' => 'receiver_name', 'format' => 'raw', 'value' => function (Order $model) {
+                            $html = $model->receiver_name;
+                            return $html . '&nbsp;&nbsp;' . Html::button('发货', ['class' => 'btn btn-xs btn-success', 'data-toggle' => "modal", 'data-target' => "#w5"]);
+                        }],
+                        'receiver_phone',
                         ['attribute' => 'receiver_state', 'value' => function (Order $order) {
-                            return implode('<br/>', [$order->receiver_name, $order->receiver_phone, $order->receiver_state . ' ' . $order->receiver_city . ' ' . $order->receiver_district . ' ' . $order->receiver_address]);
-                        }, 'label' => '地址','format'=>'raw'],
-
+                            return implode(' ', [$order->receiver_city, $order->receiver_district, $order->receiver_address]);
+                        }, 'label' => '地址', 'format' => 'raw'],
                         'buyer_nickname',
                         'openid',
+                        'vendor',
                         'buyer_message',
                         'refund_state',
                         'refund_type',
                         'refund_fee',
                         'refund_reason',
                         'refund_time:datetime',
+                        'trade_no',
                     ],
                 ]) ?></div>
         </div>
@@ -96,3 +108,37 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+
+
+<?php Modal::begin([
+    'header' => '<h3>修改价格</h3>',
+    //'toggleButton' => ['label' => 'click me'],
+]) ?>
+<?php $updatePriceForm = new UpdatePriceForm();
+$form = ActiveForm::begin([
+    'action' => ['admin/order/price'],
+]); ?>
+<?= Html::activeHiddenInput($updatePriceForm, 'id', ['value' => $model->id]) ?>
+<?= $form->field($updatePriceForm, 'fixed_amount')->textInput(); ?>
+<?= $form->field($updatePriceForm, 'fixed_reason')->textInput(); ?>
+<?= Html::submitButton('保存', ['class' => 'btn  btn-primary']) ?>
+<?php ActiveForm::end(); ?>
+
+<?php Modal::end(); ?>
+
+
+<?php Modal::begin([
+    'header' => '<h3>发货</h3>',
+    //'toggleButton' => ['label' => 'click me'],
+]) ?>
+<?php $orderConsignForm = new OrderConsignForm();
+$form = ActiveForm::begin([
+    'action' => ['admin/order/consign'],
+]); ?>
+<?= Html::activeHiddenInput($orderConsignForm, 'id', ['value' => $model->id]) ?>
+<?= $form->field($orderConsignForm, 'logistic_company')->textInput(); ?>
+<?= $form->field($orderConsignForm, 'logistic_no')->textInput(); ?>
+<?= Html::submitButton('保存', ['class' => 'btn  btn-primary']) ?>
+<?php ActiveForm::end(); ?>
+
+<?php Modal::end(); ?>

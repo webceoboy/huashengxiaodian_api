@@ -5,7 +5,9 @@ namespace app\services;
 
 
 use app\models\Order;
+use app\models\OrderConsignForm;
 use app\models\OrderItem;
+use app\models\UpdatePriceForm;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
@@ -76,12 +78,13 @@ class ApiService
         }, 7200 - 1);
     }
 
-    public static function request($api, $query = [])
+    public static function request($method = 'get', $api, $query = [])
     {
         $query['access_token'] = self::getToken();
         $url = self::getUrl('api/' . $api, $query);
         $client = self::getClient();
-        $result = json_decode($client->get($url)->getBody()->getContents(), true);
+        $options = $method == 'get' ? ['query' => $query] : ['form_params' => $query];
+        $result = json_decode($client->request($method, $url, $options)->getBody()->getContents(), true);
         if (is_array($result)) {
             if (isset($result['errcode']) && is_numeric($result['errcode']) && $result['errcode'] == 0) {
                 return $result;
@@ -96,7 +99,7 @@ class ApiService
 
     public static function getOrderList($query = [])
     {
-        return self::request('mag.admin.order.list.json', $query);
+        return self::request('get', 'mag.admin.order.list.json', $query);
     }
 
     public static function saveOrder($order)
@@ -146,5 +149,22 @@ class ApiService
 
     }
 
+    public static function updateOrder($id)
+    {
+        $result = self::request('get', 'mag.admin.order.get.json', ['id' => $id]);
+        self::saveOrder($result);
+        return $result;
+    }
 
+    public static function updatePrice(UpdatePriceForm $model)
+    {
+        $result = self::request('post', 'mag.admin.order.fix.json', $model->toArray());
+        return $result;
+    }
+
+    public static function orderConsign(OrderConsignForm $model)
+    {
+        $result = self::request('post', 'mag.admin.order.consign.json', $model->toArray());
+        return $result;
+    }
 }

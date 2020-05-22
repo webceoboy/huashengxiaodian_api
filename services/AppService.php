@@ -16,7 +16,7 @@ class AppService
             $detail[] = sprintf('%s(%d)', StringHelper::truncate($item->title, 6, ''), $item->quantity);
         }
         $text = implode("；", [
-            sprintf('金额：%s', $order->total_fee),
+            sprintf('金额：%s', $order->amount),
             sprintf('收件人：%s(%s-%s)', $order->receiver_name, $order->receiver_state, $order->receiver_city),
             sprintf('商品：%s', implode(',', $detail)),
         ]);
@@ -36,7 +36,7 @@ class AppService
     public static function fecthAllOrders()
     {
         $_ENV['BARK_URL'] = false;
-        for ($i = time(); $i > strtotime('-1 year'); $i -= 86400 * 7) {
+        for ($i = time(); $i > strtotime('-3 year'); $i -= 86400 * 7) {
             ApiService::updateOrderList(['start_time' => $i - 86400 * 7, 'end_time' => $i]);
         }
     }

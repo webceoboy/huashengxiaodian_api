@@ -232,7 +232,7 @@ use yii\helpers\Html;
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
-                        <span class="hidden-xs">Alexander Pierce</span>
+                        <span class="hidden-xs"><?= Yii::$app->user->identity->username; ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
@@ -240,13 +240,13 @@ use yii\helpers\Html;
                             <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle"
                                  alt="User Image"/>
 
-                            <p>
+                            <p class="hide">
                                 Alexander Pierce - Web Developer
                                 <small>Member since Nov. 2012</small>
                             </p>
                         </li>
                         <!-- Menu Body -->
-                        <li class="user-body">
+                        <li class="user-body hide">
                             <div class="col-xs-4 text-center">
                                 <a href="#">Followers</a>
                             </div>
@@ -264,7 +264,7 @@ use yii\helpers\Html;
                             </div>
                             <div class="pull-right">
                                 <?= Html::a(
-                                    'Sign out',
+                                    '退出',
                                     ['/site/logout'],
                                     ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
                                 ) ?>

@@ -3,8 +3,10 @@
 namespace app\controllers\admin;
 
 use app\models\Order;
+use app\models\OrderConsignForm;
 use app\models\OrderItem;
 use app\models\OrderSearch;
+use app\models\UpdatePriceForm;
 use app\services\ApiService;
 use Yii;
 use yii\filters\VerbFilter;
@@ -137,5 +139,51 @@ class OrderController extends Controller
         Yii::$app->response->content = $binary;
         Yii::$app->response->format = Response::FORMAT_RAW;
         Yii::$app->response->send();
+    }
+
+    public function actionPrice()
+    {
+        if (Yii::$app->request->isPost) {
+            $model = new UpdatePriceForm();
+            $model->load(Yii::$app->request->getBodyParams());
+            if ($model->validate()) {
+                try {
+                    $result = ApiService::updatePrice($model);
+                } catch (\Throwable $exception) {
+                    Yii::$app->session->addFlash('error', $exception->getMessage());
+                }
+                if (isset($result)) {
+                    ApiService::updateOrder($model->id);
+                    Yii::$app->session->addFlash('success', '修改价格成功');
+                }
+
+            } else {
+                Yii::$app->session->addFlash('error', array_values($model->getFirstErrors())[0]);
+            }
+            return $this->redirect(['admin/order/view', 'id' => $model->id]);
+        }
+    }
+
+    public function actionConsign()
+    {
+        if (Yii::$app->request->isPost) {
+            $model = new OrderConsignForm();
+            $model->load(Yii::$app->request->getBodyParams());
+            if ($model->validate()) {
+                try {
+                    $result = ApiService::orderConsign($model);
+                } catch (\Throwable $exception) {
+                    Yii::$app->session->addFlash('error', $exception->getMessage());
+                }
+                if (isset($result)) {
+                    ApiService::updateOrder($model->id);
+                    Yii::$app->session->addFlash('success', '发货成功');
+                }
+
+            } else {
+                Yii::$app->session->addFlash('error', array_values($model->getFirstErrors())[0]);
+            }
+            return $this->redirect(['admin/order/view', 'id' => $model->id]);
+        }
     }
 }

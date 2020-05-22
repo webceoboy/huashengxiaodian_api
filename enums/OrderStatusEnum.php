@@ -22,7 +22,7 @@ class OrderStatusEnum extends BaseEnum
 
     public static $list = [
         self::WAIT_PAY => '待付款',
-        self::WAIT_SEND => '代发货',
+        self::WAIT_SEND => '待发货',
         self::HAVE_SEND => '已发货',
         self::OVER => '交易完成',
         self::REFUNDING => '申请退款',
