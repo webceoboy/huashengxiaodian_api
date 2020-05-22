@@ -45,8 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'fixed_reason',
                 //'coin_fee',
                 //'amount',
-                'seller_message',
-                'buyer_message',
+
                 //'time:datetime',
 
                 //'wx_transaction_id',
@@ -68,6 +67,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'refund_reason',
                 //'refund_time:datetime',
                 //'raw:ntext',
+                'seller_message',
+                'buyer_message',
                 ['class' => 'yii\grid\ActionColumn', 'template' => '{view} {delete}'],
 
             ],
