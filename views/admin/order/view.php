@@ -81,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ['label' => '物流', 'format' => 'raw', 'value' => function (Order $model) {
                             $logistics = ArrayHelper::getValue($model->getRawArray(), 'logistics', []);
                             $item = isset($logistics[0]) ? $logistics[0] : [];
-                            if ($item) return sprintf('%s（<span class="btn" "data-clipboard-text"="%s" style="    text-decoration: underline;    cursor: pointer;">%s</span>）', $item['company'], $item['no']);
+                            if ($item) return sprintf('%s（<span class="btn" "data-clipboard-text"="%s" style="    text-decoration: underline;    cursor: pointer;">%s</span>）', $item['company'], $item['no'], $item['no']);
                             return '-';
                         }],
                         'vendor',
