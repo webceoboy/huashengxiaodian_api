@@ -9,7 +9,7 @@ use yii\helpers\Html;
 /* @var $searchModel app\models\OrderSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '订单';
+$this->title = '订单管理';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="box order-index  box-primary">
