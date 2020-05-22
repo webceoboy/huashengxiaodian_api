@@ -29,6 +29,7 @@ if (Yii::$app->controller->action->id === 'login') {
     dmstr\web\AdminLteAsset::register($this);
 
     $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
+    $this->registerJsFile('https://lib.baomitu.com/clipboard.js/2.0.6/clipboard.min.js');
     ?>
     <?php $this->beginPage() ?>
     <!DOCTYPE html>
@@ -37,7 +38,7 @@ if (Yii::$app->controller->action->id === 'login') {
         <meta charset="<?= Yii::$app->charset ?>"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?= Html::csrfMetaTags() ?>
-        <title><?= Html::encode($this->title) ?></title>
+        <title><?= Html::encode($this->title) ?> - 太养园ERP管理系统</title>
         <?php $this->head() ?>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
@@ -68,6 +69,10 @@ if (Yii::$app->controller->action->id === 'login') {
     </div>
 
     <?php $this->endBody() ?>
+    <script>
+
+
+    </script>
     </body>
     </html>
     <?php $this->endPage() ?>

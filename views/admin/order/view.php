@@ -19,6 +19,7 @@ $this->title = '订单详情';
 $this->params['breadcrumbs'][] = ['label' => 'Orders', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+
 ?>
 <div class="box box-primary order-view">
 
@@ -48,7 +49,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'fixed_reason',
                         'coin_fee',
                         'amount',
-                        'seller_message',
+
+                        ['attribute' => 'seller_message', 'format' => 'raw', 'value' => function (Order $model) {
+                            return Html::tag('span', $model->seller_message, ['class' => 'label label-warning']);
+                        }],
                         'time:datetime',
                         'paytime:datetime',
                         //'wx_transaction_id',
@@ -68,12 +72,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         }],
                         'receiver_phone',
                         ['attribute' => 'receiver_state', 'value' => function (Order $order) {
-                            return implode(' ', [$order->receiver_city, $order->receiver_district, $order->receiver_address]);
+                            $address = implode(' ', [$order->receiver_city, $order->receiver_district, $order->receiver_address]);
+                            $text = implode(' ', [$order->receiver_name, $address, $order->receiver_phone]);
+                            return $address . '&nbsp;&nbsp;' . Html::button('复制', ['class' => 'btn btn-success btn-xs', 'data-clipboard-text' => $text]);
                         }, 'label' => '地址', 'format' => 'raw'],
                         'buyer_nickname',
                         'openid',
                         'vendor',
-                        'buyer_message',
+                        ['attribute' => 'buyer_message', 'format' => 'raw', 'value' => function (Order $model) {
+                            return Html::tag('span', $model->buyer_message, ['class' => 'label label-warning']);
+                        }],
                         'refund_state',
                         'refund_type',
                         'refund_fee',
@@ -144,3 +152,19 @@ $form = ActiveForm::begin([
 
 <?php Modal::end(); ?>
 
+<?php
+$this->registerJs(<<<JS
+
+var clipboard=new ClipboardJS('.btn');
+ clipboard.on('success', function (e) {
+                alert('复制成功');
+
+                e.clearSelection();
+            });
+            clipboard.on('error', function (e) {
+                alert('复制失败');
+            });
+JS
+);
+
+?>
