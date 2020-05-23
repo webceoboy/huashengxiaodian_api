@@ -137,6 +137,7 @@ class ApiService
         foreach ($result['orders'] as $order) {
             self::saveOrder($order);
         }
+        return true;
     }
 
     public static function img($url)

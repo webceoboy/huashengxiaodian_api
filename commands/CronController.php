@@ -17,7 +17,7 @@ class CronController extends Controller
     {
         $mutex = new MysqlMutex();
         if ($mutex->acquire('flush_order', 10)) {
-            ApiService::updateOrderList(['start_time' => time() - ArrayHelper::getValue($_ENV, 'SCHEDULE_DAYS', 14), 'end_time' => time()]);
+            echo ApiService::updateOrderList(['start_time' => time() - ArrayHelper::getValue($_ENV, 'SCHEDULE_DAYS', 14) * 86400, 'end_time' => time()]);
         }
     }
 
