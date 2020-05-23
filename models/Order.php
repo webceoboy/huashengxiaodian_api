@@ -149,4 +149,12 @@ class Order extends \yii\db\ActiveRecord
     {
         return unserialize($this->raw);
     }
+
+    public function afterDelete()
+    {
+        parent::afterDelete();
+        foreach ($this->items as $item) {
+            $item->delete();
+        }
+    }
 }

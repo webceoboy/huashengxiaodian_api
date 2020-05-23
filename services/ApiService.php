@@ -109,6 +109,7 @@ class ApiService
             $model = new Order();
         }
         $new = $model->getIsNewRecord();
+        // var_dump($new);die();
         $model->setAttributes($order);
 
         foreach (['receiver', 'buyer', 'refund'] as $sub) {
