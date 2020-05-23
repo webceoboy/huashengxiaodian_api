@@ -15,6 +15,9 @@ class LogisticCompanyEnum extends BaseEnum
     const SF = 'SF';
     const ZTO = 'ZTO';
     const JD = 'JD';
+    const HTKY = 'HTKY';
+    const STO = 'STO';
+    const YTO = 'YTO';
     const XIANXIA = '线下配送';
     const SELF = '自提';
 
@@ -25,6 +28,9 @@ class LogisticCompanyEnum extends BaseEnum
         self::SF => '顺丰',
         self::ZTO => '中通快递',
         self::JD => '京东物流',
+        self::HTKY => '百世快递',
+        self::STO => '申通快递',
+        self::YTO => '圆通快递',
         self::XIANXIA => '线下配送',
         self::SELF => '自提',
     ];
