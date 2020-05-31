@@ -7,6 +7,8 @@ use yii\db\Migration;
  */
 class m200515_151924_init extends Migration
 {
+    const DEFAULT_OPTION = 'ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci';
+
     /**
      * {@inheritdoc}
      */
@@ -45,7 +47,7 @@ class m200515_151924_init extends Migration
             'refund_reason' => $this->string(128)->null()->comment('退款理由'),
             'refund_time' => $this->integer(10)->null()->comment('退款时间'),
             'raw' => $this->text(),
-        ]);
+        ], self::DEFAULT_OPTION);
         $this->createTable('order_item', [
             'id' => $this->primaryKey(10),
             'order_id' => $this->integer()->notNull(),
@@ -64,16 +66,16 @@ class m200515_151924_init extends Migration
             'amount' => $this->decimal(10, 2)->defaultValue(0)->comment('合计'),
             'created_at' => $this->integer(10),
             'updated_at' => $this->integer(10),
-        ]);
+        ], self::DEFAULT_OPTION);
         $this->createTable('notify', [
             'id' => $this->primaryKey(),
             'target_id' => $this->string(16),
             'created_at' => $this->integer(10),
             'updated_at' => $this->integer(10),
-        ]);
+        ], self::DEFAULT_OPTION);
         $this->createTable('user', [
             'username' => $this->string(32)->notNull(),
-        ]);
+        ], self::DEFAULT_OPTION);
     }
 
     /**
