@@ -28,7 +28,7 @@ class AppService
         $client = ApiService::getClient();
         if (!$_ENV['BARK_URL']) return false;
         foreach (explode(',', $_ENV['BARK_URL']) as $uid) {
-            $client->get(sprintf('%s/%s/%s', $uid, $title, $content))->getBody()->getContents();
+            $client->get(sprintf('%s/%s/%s', rtrim($uid, '/'), $title, $content))->getBody()->getContents();
         }
 
     }
