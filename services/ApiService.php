@@ -134,9 +134,17 @@ class ApiService
 
     public static function updateOrderList($query = [])
     {
-        $result = self::getOrderList($query);
-        foreach ($result['orders'] as $order) {
-            self::saveOrder($order);
+        $trans = \Yii::$app->db->beginTransaction();
+        try {
+            $result = self::getOrderList($query);
+            foreach ($result['orders'] as $order) {
+                self::saveOrder($order);
+            }
+            $trans->commit();
+        } catch (\Throwable $exception) {
+            $trans->rollBack();
+            \Yii::error($exception);
+            throw $exception;
         }
         return true;
     }
@@ -154,8 +162,16 @@ class ApiService
 
     public static function updateOrder($id)
     {
-        $result = self::request('get', 'mag.admin.order.get.json', ['id' => $id]);
-        self::saveOrder($result['order']);
+        $trans = \Yii::$app->db->beginTransaction();
+        try {
+            $result = self::request('get', 'mag.admin.order.get.json', ['id' => $id]);
+            self::saveOrder($result['order']);
+            $trans->commit();
+        } catch (\Throwable $exception) {
+            $trans->rollBack();
+            \Yii::error($exception);
+            throw $exception;
+        }
         return $result;
     }
 

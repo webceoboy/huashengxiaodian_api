@@ -27,8 +27,7 @@
     "dmstr/yii2-adminlte-asset": "^2.6",
     "yii2tech/ar-softdelete": "^1.0",
     "yii2mod/yii2-enum": "^1.7",
-    "symfony/dotenv": "^5.0",
-    "overtrue/wechat": "~4.0"
+    "symfony/dotenv": "^5.0"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.1.0",

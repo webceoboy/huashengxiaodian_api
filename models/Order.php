@@ -141,7 +141,11 @@ class Order extends \yii\db\ActiveRecord
     {
         parent::afterSave($insert, $changedAttributes);
         if ($insert) {
-            AppService::sendOrderNotify($this);
+            try {
+                AppService::sendOrderNotify($this);
+            } catch (\Throwable $exception) {
+                \Yii::error($exception);
+            }
         }
     }
 
